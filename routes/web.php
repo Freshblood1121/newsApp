@@ -1,6 +1,6 @@
 <?php
 
-use Doctrine\DBAL\Types\StringType;
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,18 +18,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', static function () {
     return "Welcome users!";
 });
-
-//Страница о проекте
-Route::get('/about/', static function () {
-    echo "Информация о проекте(для красоты добавил информацию php)" . PHP_EOL;
-    return phpinfo();
-});
-
-//Страница с выводом новостей по номеру(плавающая точка поддерживается)
-Route::get('/news/{post}', static function (string $post) {
-    if(preg_match("/[^\d,.]/",$post)){
-    return "Oops, post not found";
-    }else {
-        echo "Wow, new post " . $post;
-    }
+Route::group(['prefix' => 'guest'], static function () {
+    //Страница с выводом новостей
+    Route::get('/news', [NewsController::class, 'index'])
+        ->name('news');
+    //Страница с выводом одной новости на выбор
+    Route::get('/news/{id}/show', [NewsController::class, 'show'])
+        ->where('id', '\d+')
+        ->name('news.show');
+    //Страница с выводом сохранённых новостей
+    Route::get('/news/category/{id}', [NewsController::class, 'categorySavePosts'])
+        ->where('id', '\d+')
+        ->name('news.savePosts');
+    //Страница с выводом сохранённых категорий
+    Route::get('/news/category', [NewsController::class, 'saveCategory'])
+        ->name('news.saveCategory');
 });
