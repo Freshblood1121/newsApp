@@ -9,15 +9,16 @@ use Illuminate\Contracts\View\Factory;
 class NewsController extends Controller
 {
     use NewsTrait, SaveNewsTrait, SaveCategoryTrait;
-    public function index()
+    public function index(): View
     {
         return view('news.index',
         [ 'news' => $this->getNews()]);
     }
 
-    public function show(int $id)
+    public function show(int $id): View
     {
-        dd($this->getNews($id));
+        return \view('news.show',
+            ['news' => $this->getNews($id)]);
     }
 
     public function saveCategory(): array

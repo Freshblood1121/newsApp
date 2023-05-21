@@ -13,7 +13,7 @@ trait NewsTrait
                 $news[] = [
                     'id' => $i,
                     'title' => fake()->jobTitle(),
-                    'description' => fake()->text(100),
+                    'description' => fake()->text(50),
                     'author' => fake()->userName(),
                     'created_at' => now()->format('d-m-Y H:i'),
                 ];
