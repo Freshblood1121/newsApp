@@ -3,6 +3,9 @@
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\IndexController as AdminController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,12 +23,17 @@ Route::get('/', static function () {
 });
 
 //Админка
-Route::group(['prefix' => 'admin'], static function(){
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function () {
+    //Страница админки
     Route::get('/', AdminController::class)
-        ->name('admin.index');
+        ->name('index');
+    //Страница категорий
+    Route::resource('category', AdminCategoryController::class);
+    //Страница новостей
+    Route::resource('news', AdminNewsController::class);
 });
-
-Route::group(['prefix' => 'guest'], static function() {
+//Новости
+Route::group(['prefix' => 'guest'], static function () {
     //Страница с выводом новостей
     Route::get('/news', [NewsController::class, 'index'])
         ->name('news');

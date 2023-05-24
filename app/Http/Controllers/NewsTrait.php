@@ -9,7 +9,7 @@ trait NewsTrait
         $news = [];
 
         if ($id === null) {
-            for($i=1;$i<10;$i++){
+            for ($i = 1; $i < 10; $i++) {
                 $news[] = [
                     'id' => $i,
                     'title' => fake()->jobTitle(),

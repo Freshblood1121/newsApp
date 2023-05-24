@@ -9,10 +9,11 @@ use Illuminate\Contracts\View\Factory;
 class NewsController extends Controller
 {
     use NewsTrait, SaveNewsTrait, SaveCategoryTrait;
+
     public function index(): View
     {
         return view('news.index',
-        [ 'news' => $this->getNews()]);
+            ['news' => $this->getNews()]);
     }
 
     public function show(int $id): View
