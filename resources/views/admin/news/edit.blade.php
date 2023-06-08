@@ -11,11 +11,11 @@
             @csrf
             @method('put')
             <div class="form-group">
-                <label for="category_id">Категория</label>
-                <select class="form-control" name="category_id" id="category_id">
+                <label for="category_ids">Категория</label>
+                <select class="form-control" name="category_ids[]" id="category_ids" multiple>
                     <option value="0">--Выбрать--</option>
                     @foreach($categories as $category)
-                        <option @if((int)old('category_id') === $category->id) selected @endif value="{{$category->id}}">
+                        <option @if(in_array($category->id, $news->categories->pluck('id')->toArray())) selected @endif value="{{$category->id}}">
                             {{$category->title}}
                         </option>
                     @endforeach

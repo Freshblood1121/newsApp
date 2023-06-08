@@ -21,7 +21,9 @@ class NewsController extends Controller
     public function index(NewsQueryBuilder $newsQueryBuilder): View
     {   //Новости
         return \view('admin.news.index',
-            ['newsList' => $newsQueryBuilder->getAll()]);
+            [
+                'newsList' => $newsQueryBuilder->getNewsWithPagination(),
+            ]);
     }
 
     /**
@@ -29,10 +31,11 @@ class NewsController extends Controller
      * @param CategoryQueryBuilder $categoryQueryBuilder
      * @return View
      */
-    public function create(CategoryQueryBuilder $categoryQueryBuilder,): View
+    public function create(CategoryQueryBuilder $categoryQueryBuilder, News $news): View
     {   //Категории
         return \view('admin.news.create',
             [
+                'news' => $news,
                 'categories' => $categoryQueryBuilder->getAll(),
                 'statuses' => NewsStatus::all(),
             ]);
@@ -46,7 +49,9 @@ class NewsController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $news = new News($request->except('_token')); //News::create()
+
         if($news->save()) {
+            $news->categories()->sync((array) $request->input('category_ids'));
           return redirect()->route('admin.news.index')->with('success','Новость успешно добавлена!');
         }
         return back()->with('error', 'Не удалось добавить новость.');
@@ -84,8 +89,10 @@ class NewsController extends Controller
      */
     public function update(Request $request, News $news): RedirectResponse
     {
-        $news = $news->fill($request->except('_token'));
+        $news = $news->fill($request->except('_token', 'category_ids'));
+
         if($news->save()) {
+            $news->categories()->sync((array) $request->input('category_ids'));
             return redirect()->route('admin.news.index')->with('success','Новость успешно обновлена!');
         }
         return back()->with('error', 'Не удалось сохранить запись.');
