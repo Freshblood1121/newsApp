@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\NewsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\IndexController as AdminController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Account\IndexController as AccountController;
-use \App\Http\Controllers\Auth\LoginController as LogoutController;
+use App\Http\Controllers\Auth\LoginController as LogoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +67,7 @@ Route::get('session', function () {
         session()->forget($sessionName);
     }
     dd(session()->all());
-    session()->put($sessionName, 'example');
+    //session()->put($sessionName, 'example');
 });
 
 Auth::routes();
