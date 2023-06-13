@@ -34,8 +34,8 @@
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                             <a href="{{route('admin.news.edit', ['news' => $news])}}"
-                               class="btn btn-primary">Изменить</a> &nbsp;
-                            <a href="" class="btn btn-danger">Удалить</a>
+                               class="btn btn-primary">Изменить</a> &nbsp
+                            <a href="javascript:;" rel="{{$news->id}}" class="btn btn-danger delete">Удалить</a>
                         </div>
                     </td>
                 </tr>
@@ -47,4 +47,35 @@
         </table>
     </div>
     {{$newsList->links() }}
+    @push('js')
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function (){
+                let elements = document.querySelectorAll(".delete");
+                elements.forEach(function (e,k){
+                    e.addEventListener("click", function (){
+                    const id = this.getAttribute('rel');
+                    if(confirm(`Подтверждаете удаление записи с #ID = ${id}`)) {
+                        send(`/admin/news/${id}`).then(()=>{
+                            location.reload();
+                        });
+                    } else {
+                        alert("Удаление отменено");
+                    }
+                });
+                });
+            });
+
+            async function send(url) {
+                let response =  await fetch(url, {
+                    method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    });
+                let result = await response.json();
+                return result.ok;
+            }
+        </script>
+
+    @endpush
 @endsection

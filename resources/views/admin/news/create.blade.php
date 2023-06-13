@@ -7,14 +7,21 @@
         </div>
     </div>
     <div>
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                <x-alert type="danger" :message="$error"></x-alert>
+            @endforeach
+        @endif
         <form method="post" action="{{route('admin.news.store')}}">
             @csrf
             <div class="form-group">
                 <label for="category_id">Категория</label>
-                <select class="form-control" name="category_ids[]" id="category_ids" multiple>
+                <select class="form-control" name="category_ids[]"
+                        id="category_ids" multiple>
                     <option value="0">--Выбрать--</option>
                     @foreach($categories as $category)
-                        <option @if(in_array($category->id, $news->categories->pluck('id')->toArray())) selected @endif value="{{$category->id}}">
+                        <option @if(in_array($category->id, $news->categories->pluck('id')->toArray())) selected
+                                @endif value="{{$category->id}}">
                             {{$category->title}}
                         </option>
                     @endforeach
@@ -22,11 +29,11 @@
             </div>
             <div class="form-group">
                 <label for="title">Заголовок</label>
-                <input type="text" name="title" id="title" class="form-control" value="{{old('title')}}">
+                <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" value="{{old('title')}}">
             </div>
             <div class="form-group">
                 <label for="author">Автор</label>
-                <input type="text" name="author" id="author" value="{{old('author')}}" class="form-control">
+                <input type="text" name="author" id="author" value="{{old('author')}}" class="form-control @error('author') is-invalid @enderror">
             </div>
             <div class="form-group">
                 <label for="status">Статус</label>
@@ -43,7 +50,7 @@
             <div class="form-group">
                 <label for="description">Описание</label>
                 <textarea type="text" name="description" id="description"
-                          class="form-control">{{old('description')}}</textarea>
+                          class="form-control @error('description') is-invalid @enderror">{{old('description')}}</textarea>
             </div>
             <br>
             <button type="submit" class="btn btn-success">Сохранить</button>

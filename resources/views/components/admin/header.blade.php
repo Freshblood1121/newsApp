@@ -6,11 +6,10 @@
         <span class="navbar-toggle-icon"></span>
     </button>
 {{--Поменять цвет обводки поиска--}}
-    <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search"
-           aria-label="Поиск">
+    <input class="form-control w-100 rounded-0 border-0 bg-dark text-white" type="text" aria-label="Поиск">
     <div class="navbar-nav">
         <div class="nav-item text-nowrap">
-            <a class="nav-link px-3 link-light" href="#">Выйти</a>
+            <a class="nav-link px-3 link-light" href="{{ route('account.logout') }}">Выйти</a>
         </div>
     </div>
 </header>

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\IndexController as AdminController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Account\IndexController as AccountController;
+use \App\Http\Controllers\Auth\LoginController as LogoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,18 +24,25 @@ Route::get('/', static function () {
     return "Welcome users!";
 });
 
-//Админка
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function () {
-    //Страница админки
-    Route::get('/', AdminController::class)
-        ->name('index');
-    //Страница категорий
-    Route::resource('category', AdminCategoryController::class);
-    //Страница новостей
-    Route::resource('news', AdminNewsController::class);
+Route::group(['middleware' => 'auth'], static function () {
+    //Выход
+    Route::get('/logout', [LogoutController::class, 'logout'])->name('account.logout');
+    //Аккаунт
+    Route::get('/account', AccountController::class)->name('account');
+    //Админка
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'is.admin'], static function () {
+        //Страница админки
+        Route::get('/', AdminController::class)
+            ->name('index');
+        //Страница категорий
+        Route::resource('category', AdminCategoryController::class);
+        //Страница новостей
+        Route::resource('news', AdminNewsController::class);
+    });
 });
+
 //Новости
-Route::group(['prefix' => 'guest'], static function () {
+Route::group(['prefix' => 'guest',], static function () {
     //Страница с выводом новостей
     Route::get('/news', [NewsController::class, 'index'])
         ->name('news');
@@ -49,3 +58,17 @@ Route::group(['prefix' => 'guest'], static function () {
     Route::get('/news/category', [NewsController::class, 'saveCategory'])
         ->name('news.saveCategory');
 });
+
+Route::get('session', function () {
+    $sessionName = 'test';
+    if (session()->has($sessionName)) {
+        //dd(session()->get($sessionName), );
+        session()->forget($sessionName);
+    }
+    dd(session()->all());
+    session()->put($sessionName, 'example');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
