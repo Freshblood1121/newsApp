@@ -79,7 +79,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm(): View
     {
-        return view('auth.register');
+        return \view('auth.register');
     }
 
     /**
@@ -104,10 +104,5 @@ class RegisterController extends Controller
         return $request->wantsJson()
             ? new JsonResponse([], 201)
             : redirect($this->redirectPath());
-    }
-
-    protected function registered(Request $request, $user): void
-    {
-        //todo: do some here
     }
 }

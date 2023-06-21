@@ -43,4 +43,8 @@ class User extends Authenticatable
         'password' => 'hashed',
         'is_admin' => 'boolean',
     ];
+
+    protected $dates = [
+        'last_login_at'
+    ];
 }

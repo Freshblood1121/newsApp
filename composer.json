@@ -10,8 +10,11 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
+        "laravel/socialite": "^5.6",
         "laravel/tinker": "^2.8",
-        "laravel/ui": "^4.2"
+        "laravel/ui": "^4.2",
+        "orchestra/parser": "^8.0",
+        "socialiteproviders/vkontakte": "^5.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",

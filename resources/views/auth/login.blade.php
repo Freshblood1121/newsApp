@@ -60,10 +60,14 @@
 
                             <div class="row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Login') }}
+                                    <button type="submit" class="btn btn-outline-primary">
+                                        Войти
                                     </button>
 
+                                    <a href="{{ route('social.auth.redirect', ['driver' => 'vkontakte']) }}"
+                                       class="btn btn-outline-primary">
+                                        Вход через ВК
+                                    </a>
                                     @if (Route::has('password.request'))
                                         <a class="btn btn-link" href="{{ route('password.request') }}">
                                             {{ __('Forgot Your Password?') }}
