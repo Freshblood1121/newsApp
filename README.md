@@ -3,6 +3,12 @@ About project  <img src="https://github.com/fnky/fnky/raw/fnky/img/smile.gif" al
 
 This project is a website that focuses on the latest news and events from the city of Yaroslavl. The aim of the project is up-to-date information about citizens and visitors of cities.
 
+## Functionality
+
+- Users can view various news categories such as politics, culture, sports and more.
+- News is displayed in a convenient format with headlines, brief announcements and images.
+- Administrators can add, edit and delete news, manage categories and moderate comments.
+
 ------------------
 
 ### Description
