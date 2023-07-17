@@ -11,7 +11,8 @@ This project is a website that focuses on the latest news and events from the ci
 
 ------------------
 
-### Description
+### About me
+
 * 🌍  I'm based in Russia, Yaroslavl city
 * ✉️  You can contact me at [bin.karabin@mail.ru](mailto:bin.karabin@mail.ru)
 * 🧠  I'm learning Laravel
