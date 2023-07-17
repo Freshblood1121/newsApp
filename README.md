@@ -41,11 +41,8 @@ This project is a website that focuses on the latest news and events from the ci
 
 ------------------
 
-## &#x1f4c8; GitHub Stats
+## GitHub Stats
 
-<a href="https://github.com/Freshblood1121">
-  <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Freshblood1121&hide=java,html,tex&title_color=ffffff&text_color=c9cacc&icon_color=2bbc8a&bg_color=1d1f21&langs_count=3" />
-</a>
 <a href="https://github.com/Freshblood1121">
   <img align="center" src="https://github-readme-stats.vercel.app/api?username=Freshblood1121&show_icons=true&line_height=27&count_private=true&title_color=ffffff&text_color=c9cacc&icon_color=2bbc8a&bg_color=1d1f21" alt="Martin's GitHub Stats" />
 </a>
@@ -81,5 +78,4 @@ If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Lar
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 <img height="120" alt="Thanks for visiting me" width="100%" src="https://raw.githubusercontent.com/BrunnerLivio/brunnerlivio/master/images/marquee.svg" />
-
 <img src="https://github.com/fnky/fnky/raw/fnky/img/ie.jpg" alt="Best viewed with Microsoft Internet Explorer" align="center" width="128">
