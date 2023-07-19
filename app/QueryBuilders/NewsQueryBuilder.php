@@ -29,4 +29,9 @@ class NewsQueryBuilder extends QueryBuilder
     {
         return News::query()->get();
     }
+
+    public function update(News $news, array $data): bool
+    {
+        return $news->fill($data)->save();
+    }
 }

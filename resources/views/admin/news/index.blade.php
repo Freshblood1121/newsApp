@@ -7,6 +7,7 @@
             <a href="{{route('admin.news.create')}}" type="button" class="btn btn-success">Добавить новость</a>
         </div>
     </div>
+    @include('inc.message')
     <div class="table-responsive">
         <table class="table table-sm table-hover">
             <thead>
@@ -29,7 +30,7 @@
                     <td>{{$news->title}}</td>
                     <td>{{$news->author}}</td>
                     <td>{{$news->status}}</td>
-                    <td>{{$news->description}}</td>
+                    <td>{!! $news->description !!}</td>
                     <td>{{$news->created_at}}</td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
@@ -51,7 +52,7 @@
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', function (){
                 let elements = document.querySelectorAll(".delete");
-                elements.forEach(function (e,k){
+                elements.forEach(function (e){
                     e.addEventListener("click", function (){
                     const id = this.getAttribute('rel');
                     if(confirm(`Подтверждаете удаление записи с #ID = ${id}`)) {

@@ -3,11 +3,10 @@
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Редактировать новость</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-        </div>
+        <div class="btn-toolbar mb-2 mb-md-0"></div>
     </div>
     <div>
-        <form method="post" action="{{ route('admin.news.update', ['news' => $news]) }}">
+        <form method="post" action="{{ route('admin.news.update', ['news' => $news]) }}" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="form-group">
@@ -44,10 +43,22 @@
             <div class="form-group">
                 <label for="description">Описание</label>
                 <textarea type="text" name="description" id="description"
-                          class="form-control">{!! $news->description !!}</textarea>
+                          class="form-control">{!!htmlspecialchars($news->description)!!}</textarea>
             </div>
             <br>
             <button type="submit" class="btn btn-success">Сохранить</button>
         </form>
     </div>
 @endsection
+
+@push('js')
+    <script>
+        import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
+        ClassicEditor
+            .create( document.querySelector( '#description' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+@endpush

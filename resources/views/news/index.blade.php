@@ -1,49 +1,30 @@
 @extends('layout.main')
 @section('content')
-    @forelse($news as $n)
-        <div class="row mb-2">
-            <div class="col-md-6">
-                <div
-                    class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-primary">{{$n['author']}}</strong>
-                        <h3 class="mb-0">{{$n['title']}}</h3>
-                        <div class="mb-1 text-body-secondary">{{$n['created_at']}}</div>
-                        <p class="card-text mb-auto">{{$n['description']}}</p>
-                        <a href="{{route('news.show', ['id' => $n['id']])}}" class="stretched-link">Читать пост</a>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @forelse($newsList as $news)
+            <div class="col shadow-sm p-3 mb-1 bg-white rounded">
+                <div class="card h-100">
+                    <img src="{{ Storage::disk('public')->url($news->image) }}" class="rounded img-fluid" alt="imgPosts">
+                    <div class="card-body">
+                        <a class="icon-link icon-link-hover text-decoration-none"
+                           style="--bs-link-hover-color-rgb: 220,20,60;">
+                            <h5 class="card-title text-dark">{{ $news->title }}</h5>
+                        </a>
+                        <a class="icon-link icon-link-hover text-decoration-none stretched-link"
+                           href="{{ route('news.show', ['news' => $news]) }}">
+                        </a>
+                        <p class="card-text text-dark-emphasis">{!!  $news->description  !!}</p>
                     </div>
-                    <div class="col-auto d-none d-lg-block">
-                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
-                             role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
-                             focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"/>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">Добавлено: {{ $news->created_at }}</small>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div
-                    class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-primary">{{$n['author']}}</strong>
-                        <h3 class="mb-0">{{$n['title']}}</h3>
-                        <div class="mb-1 text-body-secondary">{{$n['created_at']}}</div>
-                        <p class="card-text mb-auto">{{$n['description']}}</p>
-                        <a href="{{route('news.show', ['id' => $n['id']])}}" class="stretched-link">Читать пост</a>
-                    </div>
-                    <div class="col-auto d-none d-lg-block">
-                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
-                             role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
-                             focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"/>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @empty
-        <h2>Новостей нет.</h2>
-    @endforelse
+
+        @empty
+            <h2>Новостей нет.</h2>
+        @endforelse
+    </div>
+    <br>
+    {{ $newsList->links() }}
 @endsection

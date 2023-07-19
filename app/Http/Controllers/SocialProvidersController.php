@@ -18,7 +18,7 @@ class SocialProvidersController extends Controller
     /**
      * @param string $driver
      * @param SocialInterface $social
-     * @return Redirector|RedirectResponse|Application
+     * @return Redirector|RedirectResponse
      */
     public function callback(string $driver, SocialInterface $social): Redirector|RedirectResponse
     {   //token

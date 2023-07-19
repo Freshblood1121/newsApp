@@ -9,14 +9,17 @@ use App\Http\Requests\News\EditRequest;
 use App\Models\News;
 use App\QueryBuilders\CategoryQueryBuilder;
 use App\QueryBuilders\NewsQueryBuilder;
+use App\Services\UploadService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Enum;
 use Mockery\Exception;
+use PHPUnit\Metadata\PostCondition;
 
 class NewsController extends Controller
 {
@@ -36,6 +39,7 @@ class NewsController extends Controller
     /**
      * Show the form for creating a new resource.
      * @param CategoryQueryBuilder $categoryQueryBuilder
+     * @param News $news
      * @return View
      */
     public function create(CategoryQueryBuilder $categoryQueryBuilder, News $news): View
@@ -56,6 +60,11 @@ class NewsController extends Controller
     public function store(CreateRequest $request): RedirectResponse
     {
         $news = News::create($request->validated()); //News::create()
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $path = $image->storeAs('news',  $image->hashName(), 'public');
+        }
 
         if($news->save()) {
             $news->categories()->attach($request->getCategoryIds());
@@ -94,13 +103,22 @@ class NewsController extends Controller
      * @param News $news
      * @return RedirectResponse
      */
-    public function update(EditRequest $request, News $news): RedirectResponse
+    public function update(
+        EditRequest $request,
+        News $news,
+        NewsQueryBuilder $newsQueryBuilder,
+        UploadService $uploadService
+    ): RedirectResponse
     {
-        $news = $news->fill($request->validated());
+        $validated = $request->validated();
+        if ($request->hasFile('image')) {
+            $validated['image'] = $uploadService->uploadImage($request->file('image'));
+        }
 
-        if($news->save()) {
+        if($newsQueryBuilder->update($news, $validated)) {
             $news->categories()->sync($request->getCategoryIds());
-            return redirect()->route('admin.news.index')->with('success', __('messages.admin.news.update.success'));
+            return redirect()->route('admin.news.index')
+                ->with('success', __('messages.admin.news.update.success'));
         }
         return back()->with('error', __('messages.admin.news.update.fail'));
     }
@@ -108,6 +126,7 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param News $news
+     * @return JsonResponse
      */
     public function destroy(News $news): JsonResponse
     {

@@ -12,7 +12,7 @@
                 <x-alert type="danger" :message="$error"></x-alert>
             @endforeach
         @endif
-        <form method="post" action="{{route('admin.news.store')}}">
+        <form method="post" action="{{route('admin.news.store')}}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="category_id">Категория</label>
@@ -50,7 +50,7 @@
             <div class="form-group">
                 <label for="description">Описание</label>
                 <textarea type="text" name="description" id="description"
-                          class="form-control @error('description') is-invalid @enderror">{{old('description')}}</textarea>
+                          class="form-control @error('description') is-invalid @enderror">{!! old('description') !!}</textarea>
             </div>
             <br>
             <button type="submit" class="btn btn-success">Сохранить</button>

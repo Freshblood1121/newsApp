@@ -2,33 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\News;
 use Illuminate\View\View;
-use Illuminate\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 
 class NewsController extends Controller
 {
-    use NewsTrait, SaveNewsTrait, SaveCategoryTrait;
-
     public function index(): View
     {
+        $news = News::query()->paginate(6);
         return view('news.index',
-            ['news' => $this->getNews()]);
+            ['newsList' => $news]);
     }
 
-    public function show(int $id): View
+    public function show(News $news): View
     {
         return \view('news.show',
-            ['news' => $this->getNews($id)]);
-    }
-
-    public function saveCategory(): array
-    {
-        dd($this->getCategory());
-    }
-
-    public function categorySavePosts(int $id): array
-    {
-        dd($this->getPosts($id));
+            ['news' => $news]);
     }
 }

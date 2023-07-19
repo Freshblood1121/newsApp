@@ -66,7 +66,7 @@
 
                                     <a href="{{ route('social.auth.redirect', ['driver' => 'vkontakte']) }}"
                                        class="btn btn-outline-primary">
-                                        Вход через ВК
+                                        Вход через VK ID
                                     </a>
                                     @if (Route::has('password.request'))
                                         <a class="btn btn-link" href="{{ route('password.request') }}">

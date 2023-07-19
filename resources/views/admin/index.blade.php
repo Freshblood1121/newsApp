@@ -10,10 +10,6 @@
             </button>
         </div>
     </div>
-    <div class="table-responsive">
-        <x-alert type="info" message="Hello!"></x-alert>
-        <x-alert type="danger" message="Hello!"></x-alert>
-        <x-alert type="success" message="Hello!"></x-alert>
-        <x-alert type="warning" message="Hello!"></x-alert>
-    </div>
+            <a href="{{ route('admin.parser') }}" class="btn btn-bd-primary">Парсить новости (Rambler)</a>
+
 @endsection

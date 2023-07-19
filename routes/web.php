@@ -25,7 +25,7 @@ use App\Http\Controllers\Admin\ParserController;
 
 //Страница приветствия пользователей
 Route::get('/', static function () {
-    return "Welcome users!";
+    return view('welcome');
 });
 
 Route::group(['middleware' => 'auth'], static function () {
@@ -38,7 +38,8 @@ Route::group(['middleware' => 'auth'], static function () {
         //Страница админки
         Route::get('/', AdminController::class)
             ->name('index');
-        Route::get('/parser', ParserController::class)->name('parser');
+        Route::get('/parser', ParserController::class)
+            ->name('parser');
         //Страница категорий
         Route::resource('category', AdminCategoryController::class);
         //Страница новостей
@@ -52,8 +53,8 @@ Route::group(['prefix' => 'guest',], static function () {
     Route::get('/news', [NewsController::class, 'index'])
         ->name('news');
     //Страница с выводом одной новости на выбор
-    Route::get('/news/{id}/show', [NewsController::class, 'show'])
-        ->where('id', '\d+')
+    Route::get('/news/{news}', [NewsController::class, 'show'])
+        ->where('news', '\d+')
         ->name('news.show');
     //Страница с выводом сохранённых новостей
     Route::get('/news/category/{id}', [NewsController::class, 'categorySavePosts'])
